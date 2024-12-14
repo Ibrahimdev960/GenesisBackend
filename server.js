@@ -17,11 +17,19 @@ app.use(express.json()); // To parse JSON payloads
 app.use(bodyParser.urlencoded({ extended: false })); // To parse URL-encoded payloads
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(process.env.MONGODB_URL,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
     .then(() => console.log('DB Connected.'))
     .catch((e) => console.error('DB Connection Error:', e));
 
 // Routes
+app.get('/', (req, res) => {
+    res.send('API is running');
+});
+
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/home', require('./routes/contentRoutes'));
 app.use('/api/about', require('./routes/aboutRoutes'));
@@ -30,6 +38,7 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 // app.use('/api/team', require('./routes/teamMembers'));
 app.use('/api/team-members', require('./routes/teamMembers'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 
 // Start Server
