@@ -17,10 +17,7 @@ app.use(express.json()); // To parse JSON payloads
 app.use(bodyParser.urlencoded({ extended: false })); // To parse URL-encoded payloads
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URL)
     .then(() => console.log('DB Connected.'))
     .catch((e) => console.error('DB Connection Error:', e));
 
